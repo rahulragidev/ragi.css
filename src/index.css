@@ -31,7 +31,7 @@
 
 /* ============================================
  * Import Layer Files
- * Week 1: Reset and Variables only
+ * Weeks 1-3: Reset, Variables, Typography, Forms
  * ============================================ */
 
 @import './1-reset.css';
@@ -40,8 +40,10 @@
 /* Week 2: Typography */
 @import './3-typography.css';
 
-/* Week 3-4: Forms and Layout (coming soon) */
-/* @import './4-forms.css'; */
+/* Week 3: Forms */
+@import './4-forms.css';
+
+/* Week 4: Layout (coming soon) */
 /* @import './5-layout.css'; */
 
 /* Week 5-6: Components and Themes (coming soon) */

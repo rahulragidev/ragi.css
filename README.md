@@ -65,8 +65,21 @@ Unlike other classless frameworks (Pico, MVP, Water), Ragi uses cutting-edge CSS
 - [x] Blockquotes, hr, inline elements
 - [x] Typography examples page
 
+### Week 3: Forms ✅ COMPLETE
+- [x] All input types (text, email, password, number, etc.)
+- [x] Textarea, select (single & multiple)
+- [x] Checkboxes & radio buttons with custom styling
+- [x] Range sliders, file uploads, color picker
+- [x] Date/time inputs
+- [x] Buttons with color-mix() hover states
+- [x] :has() conditional form validation (no JS!)
+- [x] :focus-visible for keyboard navigation
+- [x] Smart validation states
+- [x] Progress & meter elements
+- [x] Forms examples page
+
 ### Coming Soon
-- Week 3-4: Forms with :has() and :focus-visible
+- Week 4: Layout with container queries
 - Week 5-6: Components and themes
 - Week 7: Accessibility layer
 - Week 8: Dark mode with color-mix()
@@ -98,7 +111,7 @@ ragi.css/
 │   ├── 1-reset.css          ✅ Week 1
 │   ├── 2-variables.css      ✅ Week 1-2
 │   ├── 3-typography.css     ✅ Week 2
-│   ├── 4-forms.css          ⏳ Week 3-4
+│   ├── 4-forms.css          ✅ Week 3
 │   ├── 5-layout.css         ⏳ Week 3-4
 │   ├── 6-components.css     ⏳ Week 5-6
 │   ├── 7-accessibility.css  ⏳ Week 7
@@ -109,7 +122,8 @@ ragi.css/
 │   └── ragi-core.css
 ├── examples/
 │   ├── basic.html           ✅ Week 1
-│   └── typography.html      ✅ Week 2
+│   ├── typography.html      ✅ Week 2
+│   └── forms.html           ✅ Week 3
 ├── docs/
 │   ├── RESEARCH.md          ✅ Complete research
 │   └── PLAN.md              ✅ Implementation plan
@@ -202,5 +216,5 @@ Coming soon - accepting contributions after Week 8 completion.
 
 ---
 
-**Status:** 🚧 In Development (Week 1-2 Complete)
-**Next:** Week 3 - Forms with :has() and :focus-visible
+**Status:** 🚧 In Development (Week 1-3 Complete)
+**Next:** Week 4 - Layout with container queries

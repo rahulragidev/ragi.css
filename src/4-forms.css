@@ -1,0 +1,615 @@
+/**
+ * Ragi CSS - Forms Layer
+ * Modern form styling with :has(), :focus-visible, and smart validation
+ * Week 3
+ */
+
+@layer components {
+  /* ============================================
+   * Form Container
+   * ============================================ */
+
+  :where(form) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+
+    /* Style form when it contains invalid inputs (using :has()) */
+    &:has(input:invalid:not(:placeholder-shown)),
+    &:has(textarea:invalid:not(:placeholder-shown)),
+    &:has(select:invalid) {
+      & button[type='submit'],
+      & input[type='submit'] {
+        opacity: 0.6;
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+    }
+
+    /* Highlight form when it has focus */
+    &:focus-within {
+      outline: 1px solid color-mix(in srgb, var(--color-primary) 20%, transparent);
+      outline-offset: 4px;
+      border-radius: var(--radius-lg);
+    }
+  }
+
+  /* ============================================
+   * Labels
+   * ============================================ */
+
+  :where(label) {
+    display: block;
+    margin-block-end: var(--space-2xs);
+    font-weight: var(--font-weight-medium);
+    font-size: 0.9em;
+    color: var(--color-text);
+    cursor: pointer;
+
+    /* Required indicator */
+    &:has(+ :required)::after,
+    &:has(input:required)::after,
+    &:has(textarea:required)::after,
+    &:has(select:required)::after {
+      content: ' *';
+      color: var(--color-danger);
+      font-weight: var(--font-weight-bold);
+    }
+
+    /* Inline labels (for checkboxes/radio) */
+    &:has(input[type='checkbox']),
+    &:has(input[type='radio']) {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      margin-block-end: var(--space-sm);
+      cursor: pointer;
+
+      &::after {
+        content: none; /* Remove asterisk for inline labels */
+      }
+    }
+  }
+
+  /* ============================================
+   * Text Inputs & Textarea
+   * ============================================ */
+
+  :where(input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='file']):not([type='submit']):not([type='button']):not([type='reset'])),
+  :where(textarea),
+  :where(select) {
+    width: 100%;
+    padding: var(--space-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-size: 1rem;
+    line-height: var(--line-height-normal);
+    transition: all var(--transition-fast);
+
+    /* Placeholder styling */
+    &::placeholder {
+      color: color-mix(in srgb, var(--color-text) 50%, var(--color-bg));
+      opacity: 1;
+    }
+
+    /* Focus state (keyboard-only with :focus-visible) */
+    &:focus-visible {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 20%, transparent);
+    }
+
+    /* Hover state */
+    &:hover:not(:disabled):not(:focus) {
+      border-color: color-mix(in srgb, var(--color-border) 50%, var(--color-text));
+    }
+
+    /* Disabled state */
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      background: color-mix(in srgb, var(--color-text) 5%, var(--color-bg));
+      border-color: color-mix(in srgb, var(--color-border) 50%, var(--color-bg));
+    }
+
+    /* Read-only state */
+    &:read-only {
+      background: color-mix(in srgb, var(--color-text) 3%, var(--color-bg));
+      border-style: dashed;
+      cursor: default;
+    }
+
+    /* Invalid state (only show when user has interacted) */
+    &:invalid:not(:placeholder-shown):not(:focus) {
+      border-color: var(--color-danger);
+      background: color-mix(in srgb, var(--color-danger) 5%, var(--color-bg));
+    }
+
+    /* Valid state (only show when user has typed) */
+    &:valid:not(:placeholder-shown):not(:focus) {
+      border-color: var(--color-success);
+    }
+  }
+
+  /* ============================================
+   * Textarea Specific
+   * ============================================ */
+
+  :where(textarea) {
+    resize: vertical;
+    min-height: 8em;
+    font-family: inherit;
+    line-height: var(--line-height-normal);
+
+    &:not([rows]) {
+      min-height: 10em;
+    }
+  }
+
+  /* ============================================
+   * Select Specific
+   * ============================================ */
+
+  :where(select) {
+    cursor: pointer;
+    padding-inline-end: 2.5em;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234a5568' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75em center;
+    background-size: 0.75em;
+    appearance: none;
+
+    &:disabled {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23cbd5e0' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    }
+
+    /* Multiple select */
+    &[multiple] {
+      padding-inline-end: var(--space-sm);
+      background-image: none;
+      min-height: 8em;
+
+      & option {
+        padding: var(--space-2xs) var(--space-xs);
+      }
+    }
+  }
+
+  /* ============================================
+   * Checkbox & Radio
+   * ============================================ */
+
+  :where(input[type='checkbox']),
+  :where(input[type='radio']) {
+    width: 1.125em;
+    height: 1.125em;
+    margin: 0;
+    margin-inline-end: var(--space-xs);
+    cursor: pointer;
+    border: 2px solid var(--color-border);
+    background: var(--color-bg);
+    appearance: none;
+    transition: all var(--transition-fast);
+
+    &:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+
+    &:hover:not(:disabled) {
+      border-color: var(--color-primary);
+    }
+
+    &:checked {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    &:indeterminate {
+      background: color-mix(in srgb, var(--color-primary) 50%, var(--color-bg));
+      border-color: var(--color-primary);
+    }
+  }
+
+  /* Checkbox specific */
+  :where(input[type='checkbox']) {
+    border-radius: var(--radius-sm);
+
+    &:checked {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='white' d='M10 3L4.5 8.5L2 6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 0.75em;
+    }
+
+    &:indeterminate {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='white' d='M3 6h6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 0.75em;
+    }
+  }
+
+  /* Radio specific */
+  :where(input[type='radio']) {
+    border-radius: var(--radius-full);
+
+    &:checked {
+      background-image: radial-gradient(circle, white 40%, transparent 40%);
+    }
+  }
+
+  /* ============================================
+   * Range Input (Slider)
+   * ============================================ */
+
+  :where(input[type='range']) {
+    width: 100%;
+    height: 0.375em;
+    padding: 0;
+    border: none;
+    background: color-mix(in srgb, var(--color-text) 20%, var(--color-bg));
+    border-radius: var(--radius-full);
+    appearance: none;
+    cursor: pointer;
+
+    /* Track */
+    &::-webkit-slider-runnable-track {
+      height: 0.375em;
+      background: color-mix(in srgb, var(--color-text) 20%, var(--color-bg));
+      border-radius: var(--radius-full);
+    }
+
+    &::-moz-range-track {
+      height: 0.375em;
+      background: color-mix(in srgb, var(--color-text) 20%, var(--color-bg));
+      border-radius: var(--radius-full);
+    }
+
+    /* Thumb */
+    &::-webkit-slider-thumb {
+      appearance: none;
+      width: 1.25em;
+      height: 1.25em;
+      background: var(--color-primary);
+      border: 2px solid white;
+      border-radius: var(--radius-full);
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    &::-moz-range-thumb {
+      width: 1.25em;
+      height: 1.25em;
+      background: var(--color-primary);
+      border: 2px solid white;
+      border-radius: var(--radius-full);
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    /* Hover/Focus states */
+    &:hover::-webkit-slider-thumb,
+    &:focus-visible::-webkit-slider-thumb {
+      background: var(--color-primary-hover);
+      transform: scale(1.1);
+    }
+
+    &:hover::-moz-range-thumb,
+    &:focus-visible::-moz-range-thumb {
+      background: var(--color-primary-hover);
+      transform: scale(1.1);
+    }
+
+    &:focus-visible {
+      outline: none;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+
+      &::-webkit-slider-thumb {
+        cursor: not-allowed;
+      }
+
+      &::-moz-range-thumb {
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  /* ============================================
+   * File Input
+   * ============================================ */
+
+  :where(input[type='file']) {
+    width: 100%;
+    padding: var(--space-sm);
+    border: 2px dashed var(--color-border);
+    border-radius: var(--radius-md);
+    background: color-mix(in srgb, var(--color-text) 2%, var(--color-bg));
+    cursor: pointer;
+    transition: all var(--transition-fast);
+
+    &:hover:not(:disabled) {
+      border-color: var(--color-primary);
+      background: color-mix(in srgb, var(--color-primary) 5%, var(--color-bg));
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+
+    &::file-selector-button {
+      padding: var(--space-xs) var(--space-md);
+      margin-inline-end: var(--space-sm);
+      background: var(--color-primary);
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-weight: var(--font-weight-medium);
+      cursor: pointer;
+      transition: background var(--transition-fast);
+    }
+
+    &::file-selector-button:hover {
+      background: var(--color-primary-hover);
+    }
+  }
+
+  /* ============================================
+   * Buttons
+   * ============================================ */
+
+  :where(button),
+  :where(input[type='submit']),
+  :where(input[type='button']),
+  :where(input[type='reset']) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    padding: var(--space-sm) var(--space-lg);
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-medium);
+    font-size: 1rem;
+    line-height: 1.5;
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    user-select: none;
+
+    &:hover:not(:disabled) {
+      background: var(--color-primary-hover);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+      box-shadow: var(--shadow-sm);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+  }
+
+  /* Reset button variant */
+  :where(input[type='reset']),
+  :where(button[type='reset']) {
+    background: color-mix(in srgb, var(--color-text) 15%, var(--color-bg));
+    color: var(--color-text);
+
+    &:hover:not(:disabled) {
+      background: color-mix(in srgb, var(--color-text) 25%, var(--color-bg));
+    }
+
+    &:focus-visible {
+      outline-color: var(--color-text);
+    }
+  }
+
+  /* ============================================
+   * Fieldset & Legend
+   * ============================================ */
+
+  :where(fieldset) {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    margin-block: var(--space-md);
+    min-width: 0;
+
+    & legend {
+      padding-inline: var(--space-sm);
+      font-weight: var(--font-weight-semibold);
+      font-size: 1.1em;
+      color: var(--color-text);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+
+      & legend {
+        color: var(--color-text-muted);
+      }
+    }
+  }
+
+  /* ============================================
+   * Form Validation Messages (using :has())
+   * ============================================ */
+
+  /* Style parent div when input is invalid */
+  :where(div):has(> input:invalid:not(:placeholder-shown)),
+  :where(div):has(> textarea:invalid:not(:placeholder-shown)),
+  :where(div):has(> select:invalid) {
+    & small,
+    & .error-message {
+      display: block;
+      margin-block-start: var(--space-2xs);
+      color: var(--color-danger);
+      font-size: 0.875em;
+    }
+  }
+
+  /* Style parent div when input is valid */
+  :where(div):has(> input:valid:not(:placeholder-shown)),
+  :where(div):has(> textarea:valid:not(:placeholder-shown)) {
+    & .success-message {
+      display: block;
+      margin-block-start: var(--space-2xs);
+      color: var(--color-success);
+      font-size: 0.875em;
+    }
+  }
+
+  /* ============================================
+   * Form Groups (spacing)
+   * ============================================ */
+
+  :where(form) {
+    & > div,
+    & > fieldset,
+    & > section {
+      margin-block-end: var(--space-md);
+
+      &:last-child {
+        margin-block-end: 0;
+      }
+    }
+  }
+
+  /* ============================================
+   * Color & Date Inputs
+   * ============================================ */
+
+  :where(input[type='color']) {
+    width: 4rem;
+    height: 3rem;
+    padding: 0.25rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+
+    &::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+
+    &::-webkit-color-swatch {
+      border: none;
+      border-radius: calc(var(--radius-md) - 0.25rem);
+    }
+
+    &::-moz-color-swatch {
+      border: none;
+      border-radius: calc(var(--radius-md) - 0.25rem);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+  }
+
+  :where(input[type='date']),
+  :where(input[type='datetime-local']),
+  :where(input[type='time']),
+  :where(input[type='week']),
+  :where(input[type='month']) {
+    cursor: pointer;
+
+    &::-webkit-calendar-picker-indicator {
+      cursor: pointer;
+      opacity: 0.6;
+      transition: opacity var(--transition-fast);
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  /* ============================================
+   * Progress & Meter (bonus)
+   * ============================================ */
+
+  :where(progress),
+  :where(meter) {
+    width: 100%;
+    height: 1rem;
+    border: none;
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    background: color-mix(in srgb, var(--color-text) 10%, var(--color-bg));
+    appearance: none;
+  }
+
+  :where(progress) {
+    &::-webkit-progress-bar {
+      background: color-mix(in srgb, var(--color-text) 10%, var(--color-bg));
+      border-radius: var(--radius-full);
+    }
+
+    &::-webkit-progress-value {
+      background: var(--color-primary);
+      border-radius: var(--radius-full);
+      transition: width var(--transition-base);
+    }
+
+    &::-moz-progress-bar {
+      background: var(--color-primary);
+      border-radius: var(--radius-full);
+      transition: width var(--transition-base);
+    }
+  }
+
+  :where(meter) {
+    &::-webkit-meter-bar {
+      background: color-mix(in srgb, var(--color-text) 10%, var(--color-bg));
+      border-radius: var(--radius-full);
+    }
+
+    &::-webkit-meter-optimum-value {
+      background: var(--color-success);
+      border-radius: var(--radius-full);
+    }
+
+    &::-webkit-meter-suboptimum-value {
+      background: var(--color-warning);
+      border-radius: var(--radius-full);
+    }
+
+    &::-webkit-meter-even-less-good-value {
+      background: var(--color-danger);
+      border-radius: var(--radius-full);
+    }
+
+    &::-moz-meter-bar {
+      border-radius: var(--radius-full);
+    }
+  }
+}

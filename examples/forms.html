@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forms - Ragi CSS</title>
+  <link rel="stylesheet" href="../dist/ragi.css">
+  <style>
+    main {
+      max-width: 70rem;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    section {
+      margin-block: 3rem;
+      padding-block: 2rem;
+      border-block-start: 1px solid var(--color-border);
+    }
+
+    section:first-of-type {
+      border: none;
+    }
+
+    .demo-box {
+      padding: 2rem;
+      background: var(--color-bg-secondary);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border);
+      margin-block: 1.5rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .form-row > * {
+      flex: 1;
+    }
+
+    /* Hidden messages that appear with :has() */
+    .error-message,
+    .success-message {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Ragi CSS Forms</h1>
+      <p class="lead">
+        Modern form styling with :has() conditional logic, :focus-visible for accessibility,
+        and smart validation states. No JavaScript required!
+      </p>
+    </header>
+
+    <!-- ============================================ -->
+    <!-- Text Inputs -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Text Inputs</h2>
+      <p>All text inputs have :focus-visible support (keyboard-only focus rings).</p>
+
+      <div class="demo-box">
+        <form>
+          <div>
+            <label for="text">Text Input</label>
+            <input type="text" id="text" placeholder="Enter text...">
+          </div>
+
+          <div>
+            <label for="email">Email (with validation)</label>
+            <input type="email" id="email" placeholder="your@email.com" required>
+            <small class="error-message">Please enter a valid email address</small>
+            <small class="success-message">✓ Email looks good!</small>
+          </div>
+
+          <div>
+            <label for="password">Password (required)</label>
+            <input type="password" id="password" placeholder="••••••••" required minlength="8">
+            <small class="error-message">Password must be at least 8 characters</small>
+          </div>
+
+          <div>
+            <label for="url">URL</label>
+            <input type="url" id="url" placeholder="https://example.com">
+          </div>
+
+          <div>
+            <label for="tel">Telephone</label>
+            <input type="tel" id="tel" placeholder="+1 (555) 123-4567">
+          </div>
+
+          <div>
+            <label for="number">Number</label>
+            <input type="number" id="number" placeholder="42" min="0" max="100">
+          </div>
+
+          <div>
+            <label for="search">Search</label>
+            <input type="search" id="search" placeholder="Search...">
+          </div>
+
+          <div>
+            <label for="disabled">Disabled Input</label>
+            <input type="text" id="disabled" value="Cannot edit" disabled>
+          </div>
+
+          <div>
+            <label for="readonly">Read-only Input</label>
+            <input type="text" id="readonly" value="Can select but not edit" readonly>
+          </div>
+        </form>
+      </div>
+
+      <details>
+        <summary>View :focus-visible code</summary>
+        <pre><code>input:focus-visible {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 20%, transparent);
+}
+
+/* No focus ring on mouse click, only keyboard Tab */</code></pre>
+      </details>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- Textarea & Select -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Textarea & Select</h2>
+
+      <div class="demo-box">
+        <form>
+          <div>
+            <label for="textarea">Textarea (resizable vertically)</label>
+            <textarea id="textarea" placeholder="Enter your message..."></textarea>
+          </div>
+
+          <div>
+            <label for="select">Select Dropdown</label>
+            <select id="select">
+              <option value="">Choose an option...</option>
+              <option value="1">Option 1</option>
+              <option value="2">Option 2</option>
+              <option value="3">Option 3</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="select-required">Required Select</label>
+            <select id="select-required" required>
+              <option value="">Please select...</option>
+              <option value="a">Option A</option>
+              <option value="b">Option B</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="select-multiple">Multiple Select (Ctrl+Click)</label>
+            <select id="select-multiple" multiple>
+              <option value="red">Red</option>
+              <option value="green">Green</option>
+              <option value="blue">Blue</option>
+              <option value="yellow">Yellow</option>
+              <option value="purple">Purple</option>
+            </select>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- Checkboxes & Radio Buttons -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Checkboxes & Radio Buttons</h2>
+
+      <div class="demo-box">
+        <form>
+          <fieldset>
+            <legend>Checkboxes</legend>
+            <label>
+              <input type="checkbox" name="features" value="feature1">
+              Feature 1
+            </label>
+            <label>
+              <input type="checkbox" name="features" value="feature2" checked>
+              Feature 2 (checked)
+            </label>
+            <label>
+              <input type="checkbox" name="features" value="feature3">
+              Feature 3
+            </label>
+            <label>
+              <input type="checkbox" name="features" value="feature4" disabled>
+              Feature 4 (disabled)
+            </label>
+          </fieldset>
+
+          <fieldset>
+            <legend>Radio Buttons</legend>
+            <label>
+              <input type="radio" name="plan" value="free" checked>
+              Free Plan
+            </label>
+            <label>
+              <input type="radio" name="plan" value="pro">
+              Pro Plan
+            </label>
+            <label>
+              <input type="radio" name="plan" value="enterprise">
+              Enterprise Plan
+            </label>
+            <label>
+              <input type="radio" name="plan" value="custom" disabled>
+              Custom Plan (disabled)
+            </label>
+          </fieldset>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- Range Slider -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Range Slider</h2>
+
+      <div class="demo-box">
+        <form>
+          <div>
+            <label for="range1">Volume: <output id="range1-output">50</output>%</label>
+            <input type="range" id="range1" min="0" max="100" value="50"
+                   oninput="document.getElementById('range1-output').value = this.value">
+          </div>
+
+          <div>
+            <label for="range2">Temperature: <output id="range2-output">72</output>°F</label>
+            <input type="range" id="range2" min="60" max="80" value="72" step="1"
+                   oninput="document.getElementById('range2-output').value = this.value">
+          </div>
+
+          <div>
+            <label for="range3">Disabled Slider</label>
+            <input type="range" id="range3" value="30" disabled>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- File Input -->
+    <!-- ============================================ -->
+    <section>
+      <h2>File Input</h2>
+
+      <div class="demo-box">
+        <form>
+          <div>
+            <label for="file1">Upload File</label>
+            <input type="file" id="file1">
+          </div>
+
+          <div>
+            <label for="file2">Upload Multiple Images</label>
+            <input type="file" id="file2" accept="image/*" multiple>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- Date & Time Inputs -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Date & Time Inputs</h2>
+
+      <div class="demo-box">
+        <form>
+          <div class="form-row">
+            <div>
+              <label for="date">Date</label>
+              <input type="date" id="date">
+            </div>
+
+            <div>
+              <label for="time">Time</label>
+              <input type="time" id="time">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div>
+              <label for="datetime">Date & Time</label>
+              <input type="datetime-local" id="datetime">
+            </div>
+
+            <div>
+              <label for="week">Week</label>
+              <input type="week" id="week">
+            </div>
+          </div>
+
+          <div>
+            <label for="month">Month</label>
+            <input type="month" id="month">
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- Color Picker -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Color Picker</h2>
+
+      <div class="demo-box">
+        <form>
+          <div>
+            <label for="color">Choose Color</label>
+            <input type="color" id="color" value="#3b82f6">
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- Buttons -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Buttons</h2>
+      <p>Buttons use color-mix() for dynamic hover states.</p>
+
+      <div class="demo-box">
+        <form style="display: block;">
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
+            <button type="button">Primary Button</button>
+            <button type="submit">Submit Button</button>
+            <button type="reset">Reset Button</button>
+            <button type="button" disabled>Disabled Button</button>
+          </div>
+
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <input type="button" value="Input Button">
+            <input type="submit" value="Input Submit">
+            <input type="reset" value="Input Reset">
+          </div>
+        </form>
+      </div>
+
+      <details>
+        <summary>View color-mix() hover code</summary>
+        <pre><code>button:hover {
+  background: var(--color-primary-hover);
+  transform: translateY(-1px);
+}
+
+/* --color-primary-hover generated with color-mix() */
+--color-primary-hover: color-mix(in srgb, var(--color-primary) 85%, black);</code></pre>
+      </details>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- Progress & Meter -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Progress & Meter</h2>
+
+      <div class="demo-box">
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+          <div>
+            <label>Progress (indeterminate)</label>
+            <progress></progress>
+          </div>
+
+          <div>
+            <label>Progress (50%)</label>
+            <progress value="50" max="100"></progress>
+          </div>
+
+          <div>
+            <label>Progress (75%)</label>
+            <progress value="75" max="100"></progress>
+          </div>
+
+          <div>
+            <label>Meter (optimum - green)</label>
+            <meter value="0.8" min="0" max="1" low="0.3" high="0.7" optimum="0.9"></meter>
+          </div>
+
+          <div>
+            <label>Meter (suboptimum - yellow)</label>
+            <meter value="0.5" min="0" max="1" low="0.3" high="0.7" optimum="0.9"></meter>
+          </div>
+
+          <div>
+            <label>Meter (low - red)</label>
+            <meter value="0.2" min="0" max="1" low="0.3" high="0.7" optimum="0.9"></meter>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- :has() Form Validation Demo -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Smart Form Validation with :has()</h2>
+      <p>
+        Submit button is automatically disabled when form has invalid inputs.
+        <strong>No JavaScript!</strong> This uses the :has() selector.
+      </p>
+
+      <div class="demo-box">
+        <form>
+          <div>
+            <label for="name-required">Name (required)</label>
+            <input type="text" id="name-required" placeholder="John Doe" required>
+            <small class="error-message">Name is required</small>
+          </div>
+
+          <div>
+            <label for="email-required">Email (required, must be valid)</label>
+            <input type="email" id="email-required" placeholder="john@example.com" required>
+            <small class="error-message">Please enter a valid email</small>
+            <small class="success-message">✓ Email is valid</small>
+          </div>
+
+          <div>
+            <label for="age">Age (must be 18+)</label>
+            <input type="number" id="age" min="18" max="120" placeholder="25" required>
+            <small class="error-message">You must be at least 18 years old</small>
+          </div>
+
+          <div>
+            <label>
+              <input type="checkbox" required>
+              I agree to the terms and conditions (required)
+            </label>
+          </div>
+
+          <div style="margin-top: 1rem;">
+            <button type="submit">Submit Form</button>
+            <button type="reset">Reset</button>
+          </div>
+
+          <p style="margin-top: 1rem; font-size: 0.9em; color: var(--color-text-muted);">
+            <strong>Try it:</strong> Leave fields empty and see the submit button get disabled!
+            The button becomes clickable only when all required fields are valid.
+          </p>
+        </form>
+      </div>
+
+      <details>
+        <summary>View :has() validation code</summary>
+        <pre><code>/* Disable submit when form has invalid inputs */
+form:has(input:invalid:not(:placeholder-shown)) {
+  & button[type='submit'] {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+/* Show error messages when parent div has invalid input */
+div:has(> input:invalid:not(:placeholder-shown)) {
+  & .error-message {
+    display: block;
+    color: var(--color-danger);
+  }
+}</code></pre>
+      </details>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- Complete Contact Form Example -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Real-World Example: Contact Form</h2>
+
+      <div class="demo-box">
+        <form>
+          <h3>Get in Touch</h3>
+          <p>Fill out the form below and we'll get back to you shortly.</p>
+
+          <div class="form-row">
+            <div>
+              <label for="contact-first">First Name</label>
+              <input type="text" id="contact-first" required>
+            </div>
+
+            <div>
+              <label for="contact-last">Last Name</label>
+              <input type="text" id="contact-last" required>
+            </div>
+          </div>
+
+          <div>
+            <label for="contact-email">Email Address</label>
+            <input type="email" id="contact-email" required>
+            <small class="error-message">Please enter a valid email address</small>
+          </div>
+
+          <div>
+            <label for="contact-subject">Subject</label>
+            <select id="contact-subject" required>
+              <option value="">Choose a subject...</option>
+              <option value="general">General Inquiry</option>
+              <option value="support">Technical Support</option>
+              <option value="sales">Sales Question</option>
+              <option value="feedback">Feedback</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="contact-message">Message</label>
+            <textarea id="contact-message" rows="6" required
+                      placeholder="Tell us what's on your mind..."></textarea>
+          </div>
+
+          <fieldset>
+            <legend>Contact Preferences</legend>
+            <label>
+              <input type="checkbox" name="preferences" value="email" checked>
+              Email me updates
+            </label>
+            <label>
+              <input type="checkbox" name="preferences" value="newsletter">
+              Subscribe to newsletter
+            </label>
+          </fieldset>
+
+          <div>
+            <label>
+              <input type="checkbox" required>
+              I agree to the privacy policy
+            </label>
+          </div>
+
+          <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+            <button type="submit">Send Message</button>
+            <button type="reset">Clear Form</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- Keyboard Navigation Test -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Keyboard Navigation Test</h2>
+      <p>
+        Press <kbd>Tab</kbd> to navigate through form elements.
+        Notice that focus indicators only appear for keyboard navigation,
+        not mouse clicks (this is :focus-visible in action).
+      </p>
+
+      <div class="demo-box">
+        <form>
+          <div>
+            <label for="tab1">First Field</label>
+            <input type="text" id="tab1" placeholder="Tab to next field">
+          </div>
+
+          <div>
+            <label for="tab2">Second Field</label>
+            <input type="text" id="tab2" placeholder="Press Tab again">
+          </div>
+
+          <div>
+            <label for="tab3">Select Field</label>
+            <select id="tab3">
+              <option>Option 1</option>
+              <option>Option 2</option>
+            </select>
+          </div>
+
+          <div>
+            <label>
+              <input type="checkbox" id="tab4">
+              Check this box
+            </label>
+          </div>
+
+          <button type="button">Tab to this button</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    console.log('📝 Forms Test Page Loaded');
+
+    // Monitor form validity with :has()
+    const forms = document.querySelectorAll('form');
+    forms.forEach((form, index) => {
+      const submitBtn = form.querySelector('button[type="submit"]');
+      if (submitBtn) {
+        const observer = new MutationObserver(() => {
+          const isDisabled = submitBtn.style.pointerEvents === 'none';
+          console.log(`Form ${index + 1} submit button:`, isDisabled ? 'DISABLED (invalid)' : 'ENABLED (valid)');
+        });
+
+        observer.observe(submitBtn, {
+          attributes: true,
+          attributeFilter: ['style']
+        });
+      }
+    });
+
+    // Log focus method (keyboard vs mouse)
+    document.addEventListener('focus', (e) => {
+      if (e.target.matches('input, textarea, select, button')) {
+        console.log('Focused:', e.target.id || e.target.tagName, '- Focus-visible will show outline for keyboard only');
+      }
+    }, true);
+  </script>
+</body>
+</html>
