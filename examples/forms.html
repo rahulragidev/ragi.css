@@ -46,8 +46,7 @@
     }
 
     /* Hidden messages that appear with :has() */
-    .error-message,
-    .success-message {
+    small {
       display: none;
     }
   </style>
@@ -56,7 +55,7 @@
   <main>
     <header>
       <h1>Ragi CSS Forms</h1>
-      <p class="lead">
+      <p>
         Modern form styling with :has() conditional logic, :focus-visible for accessibility,
         and smart validation states. No JavaScript required!
       </p>
@@ -79,14 +78,14 @@
           <div>
             <label for="email">Email (with validation)</label>
             <input type="email" id="email" placeholder="your@email.com" required>
-            <small class="error-message">Please enter a valid email address</small>
-            <small class="success-message">✓ Email looks good!</small>
+            <small>Please enter a valid email address</small>
+            <small>✓ Email looks good!</small>
           </div>
 
           <div>
             <label for="password">Password (required)</label>
             <input type="password" id="password" placeholder="••••••••" required minlength="8">
-            <small class="error-message">Password must be at least 8 characters</small>
+            <small>Password must be at least 8 characters</small>
           </div>
 
           <div>
@@ -427,20 +426,20 @@
           <div>
             <label for="name-required">Name (required)</label>
             <input type="text" id="name-required" placeholder="John Doe" required>
-            <small class="error-message">Name is required</small>
+            <small>Name is required</small>
           </div>
 
           <div>
             <label for="email-required">Email (required, must be valid)</label>
             <input type="email" id="email-required" placeholder="john@example.com" required>
-            <small class="error-message">Please enter a valid email</small>
-            <small class="success-message">✓ Email is valid</small>
+            <small>Please enter a valid email</small>
+            <small>✓ Email is valid</small>
           </div>
 
           <div>
             <label for="age">Age (must be 18+)</label>
             <input type="number" id="age" min="18" max="120" placeholder="25" required>
-            <small class="error-message">You must be at least 18 years old</small>
+            <small>You must be at least 18 years old</small>
           </div>
 
           <div>
@@ -475,7 +474,7 @@ form:has(input:invalid:not(:placeholder-shown)) {
 
 /* Show error messages when parent div has invalid input */
 div:has(> input:invalid:not(:placeholder-shown)) {
-  & .error-message {
+  & small {
     display: block;
     color: var(--color-danger);
   }
@@ -509,7 +508,7 @@ div:has(> input:invalid:not(:placeholder-shown)) {
           <div>
             <label for="contact-email">Email Address</label>
             <input type="email" id="contact-email" required>
-            <small class="error-message">Please enter a valid email address</small>
+            <small>Please enter a valid email address</small>
           </div>
 
           <div>

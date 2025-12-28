@@ -467,8 +467,7 @@
   :where(div):has(> input:invalid:not(:placeholder-shown)),
   :where(div):has(> textarea:invalid:not(:placeholder-shown)),
   :where(div):has(> select:invalid) {
-    & small,
-    & .error-message {
+    & small {
       display: block;
       margin-block-start: var(--space-2xs);
       color: var(--color-danger);
@@ -476,16 +475,6 @@
     }
   }
 
-  /* Style parent div when input is valid */
-  :where(div):has(> input:valid:not(:placeholder-shown)),
-  :where(div):has(> textarea:valid:not(:placeholder-shown)) {
-    & .success-message {
-      display: block;
-      margin-block-start: var(--space-2xs);
-      color: var(--color-success);
-      font-size: 0.875em;
-    }
-  }
 
   /* ============================================
    * Form Groups (spacing)

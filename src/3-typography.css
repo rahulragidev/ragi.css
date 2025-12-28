@@ -414,14 +414,4 @@
     color: var(--color-text);
   }
 
-  /* ============================================
-   * Utility: .lead (larger intro text)
-   * This is one of the few classes we provide
-   * ============================================ */
-
-  .lead {
-    font-size: 1.25em;
-    line-height: var(--line-height-loose);
-    color: var(--color-text-muted);
-  }
 }
