@@ -9,76 +9,72 @@
    * Container Query Setup
    * ============================================ */
 
-  /* Body as viewport container */
   :where(body) {
     container-type: inline-size;
     container-name: viewport;
   }
 
-  /* Main structural elements as containers */
   :where(main, article, section, aside, nav, header, footer) {
     container-type: inline-size;
   }
 
   /* ============================================
-   * Main Content Area
+   * Main Content Area (Generous Spacing)
    * ============================================ */
 
   :where(main) {
-    max-width: 70rem;
+    max-width: 72rem;
     margin-inline: auto;
-    padding-inline: clamp(1rem, 5vw, 3rem);
-    padding-block: clamp(1rem, 3vw, 2rem);
+    padding-inline: clamp(1.5rem, 5vw, 4rem);
+    padding-block: clamp(2rem, 5vw, 5rem);
   }
 
   /* ============================================
-   * Subgrid Support (Progressive Enhancement)
-   * Works in Chrome 117+, Firefox 71+, Safari 16+
+   * Subgrid Support
    * ============================================ */
 
   @supports (grid-template-rows: subgrid) {
-    /* Article cards with header/content/footer */
     :where(article):has(> header):has(> footer) {
       display: grid;
       grid-template-rows: auto 1fr auto;
 
-      & > header {
-        grid-row: 1;
-      }
-
-      & > footer {
-        grid-row: 3;
-      }
+      & > header { grid-row: 1; }
+      & > footer { grid-row: 3; }
     }
   }
 
   /* ============================================
-   * Container Queries for Responsive Components
+   * Container Queries
    * ============================================ */
 
-  /* Article layout adapts based on container width */
-  @container (min-width: 600px) {
+  /* Article layout */
+  @container (min-width: 700px) {
     :where(article):has(> header) {
       & > header {
         display: grid;
         grid-template-columns: auto 1fr;
-        gap: var(--space-lg);
-        align-items: start;
+        gap: var(--space-xl);
+        align-items: center;
+        margin-bottom: var(--space-xl);
       }
     }
   }
 
-  /* Section with image adapts to container */
-  @container (min-width: 500px) {
+  /* Section with image */
+  @container (min-width: 600px) {
     :where(section):has(img) {
       display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: var(--space-lg);
-      align-items: start;
+      grid-template-columns: 1fr 1.5fr;
+      gap: var(--space-2xl);
+      align-items: center;
 
       & img {
         grid-column: 1;
         grid-row: 1 / -1;
+        width: 100%;
+        height: auto;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-lg);
       }
     }
   }
@@ -87,61 +83,54 @@
    * Sidebar Layout
    * ============================================ */
 
-  /* Body with aside creates sidebar layout at wide viewports */
-  @container viewport (min-width: 900px) {
+  @container viewport (min-width: 1024px) {
     :where(body):has(aside) {
       display: grid;
-      grid-template-columns: 1fr 20rem;
-      gap: var(--space-xl);
+      grid-template-columns: 18rem 1fr;
+      gap: var(--space-2xl);
       align-items: start;
 
       & > main {
-        max-width: none;
-        padding-inline: 0;
+        max-width: 100%;
+        padding: 0;
       }
 
       & > aside {
         position: sticky;
-        top: var(--space-lg);
-        max-height: calc(100vh - var(--space-xl));
+        top: var(--space-xl);
+        height: calc(100vh - var(--space-xl) * 2);
         overflow-y: auto;
+        padding-right: var(--space-md);
       }
     }
   }
 
-  /* Reverse sidebar (aside on left) */
-  @container viewport (min-width: 900px) {
-    :where(body):has(aside[data-position='left']) {
-      grid-template-columns: 20rem 1fr;
+  /* Reverse sidebar */
+  @container viewport (min-width: 1024px) {
+    :where(body):has(aside[data-position='right']) {
+      grid-template-columns: 1fr 18rem;
 
       & > aside {
-        order: -1;
+        order: 2;
+        padding-right: 0;
+        padding-left: var(--space-md);
       }
     }
   }
 
   /* ============================================
-   * Header & Footer Layouts
+   * Header & Footer
    * ============================================ */
 
   :where(header, footer) {
-    padding-block: clamp(1rem, 2vw, 1.5rem);
+    padding-block: clamp(1.5rem, 3vw, 2.5rem);
 
     & > * {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--space-md);
+      gap: var(--space-lg);
       align-items: center;
       justify-content: space-between;
-    }
-  }
-
-  /* Header with container query */
-  @container (min-width: 600px) {
-    :where(header) {
-      & nav ul {
-        flex-direction: row;
-      }
     }
   }
 
@@ -153,27 +142,17 @@
     & ul {
       display: flex;
       flex-direction: column;
-      gap: var(--space-sm) var(--space-lg);
+      gap: var(--space-md);
       list-style: none;
       padding: 0;
       margin: 0;
     }
 
-    /* Horizontal nav at wider containers */
-    @container (min-width: 500px) {
+    @container (min-width: 600px) {
       & ul {
         flex-direction: row;
         flex-wrap: wrap;
-      }
-    }
-
-    /* Nested nav (sidebar) */
-    & nav,
-    & ul ul {
-      & ul {
-        flex-direction: column;
-        gap: var(--space-xs);
-        margin-inline-start: var(--space-md);
+        gap: var(--space-lg);
       }
     }
   }
@@ -186,10 +165,6 @@
     max-width: 100%;
     height: auto;
     display: block;
-  }
-
-  /* Full bleed images in articles */
-  :where(article) img {
     border-radius: var(--radius-md);
   }
 }

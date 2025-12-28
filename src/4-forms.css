@@ -12,25 +12,17 @@
   :where(form) {
     display: flex;
     flex-direction: column;
-    gap: var(--space-md);
+    gap: var(--space-lg);
 
-    /* Style form when it contains invalid inputs (using :has()) */
+    /* Disabled submit button when invalid */
     &:has(input:invalid:not(:placeholder-shown)),
     &:has(textarea:invalid:not(:placeholder-shown)),
     &:has(select:invalid) {
       & button[type='submit'],
       & input[type='submit'] {
-        opacity: 0.6;
+        opacity: 0.5;
         cursor: not-allowed;
-        pointer-events: none;
       }
-    }
-
-    /* Highlight form when it has focus */
-    &:focus-within {
-      outline: 1px solid color-mix(in srgb, var(--color-primary) 20%, transparent);
-      outline-offset: 4px;
-      border-radius: var(--radius-lg);
     }
   }
 
@@ -40,34 +32,27 @@
 
   :where(label) {
     display: block;
-    margin-block-end: var(--space-2xs);
+    margin-block-end: 0.5em;
     font-weight: var(--font-weight-medium);
-    font-size: 0.9em;
+    font-size: 0.875rem;
     color: var(--color-text);
     cursor: pointer;
+    transition: color var(--transition-fast);
 
     /* Required indicator */
     &:has(+ :required)::after,
     &:has(input:required)::after,
     &:has(textarea:required)::after,
     &:has(select:required)::after {
-      content: ' *';
+      content: '*';
+      margin-left: 0.25em;
       color: var(--color-danger);
-      font-weight: var(--font-weight-bold);
     }
 
-    /* Inline labels (for checkboxes/radio) */
-    &:has(input[type='checkbox']),
-    &:has(input[type='radio']) {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-xs);
-      margin-block-end: var(--space-sm);
-      cursor: pointer;
-
-      &::after {
-        content: none; /* Remove asterisk for inline labels */
-      }
+    /* Active label color */
+    &:has(+ :focus-visible),
+    &:has(:focus-visible) {
+      color: var(--color-primary);
     }
   }
 
@@ -79,7 +64,7 @@
   :where(textarea),
   :where(select) {
     width: 100%;
-    padding: var(--space-sm);
+    padding: 0.75em 1em;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     background: var(--color-bg);
@@ -87,49 +72,33 @@
     font-size: 1rem;
     line-height: var(--line-height-normal);
     transition: all var(--transition-fast);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 
     /* Placeholder styling */
     &::placeholder {
-      color: color-mix(in srgb, var(--color-text) 50%, var(--color-bg));
-      opacity: 1;
-    }
-
-    /* Focus state (keyboard-only with :focus-visible) */
-    &:focus-visible {
-      outline: none;
-      border-color: var(--color-primary);
-      box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 20%, transparent);
+      color: var(--color-text-muted);
+      opacity: 0.7;
     }
 
     /* Hover state */
     &:hover:not(:disabled):not(:focus) {
-      border-color: color-mix(in srgb, var(--color-border) 50%, var(--color-text));
+      border-color: color-mix(in srgb, var(--color-border) 80%, black);
+    }
+
+    /* Focus state */
+    &:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 4px var(--color-primary-light);
     }
 
     /* Disabled state */
     &:disabled {
-      opacity: 0.6;
+      background: var(--color-bg-secondary);
+      border-color: var(--color-border);
+      color: var(--color-text-muted);
       cursor: not-allowed;
-      background: color-mix(in srgb, var(--color-text) 5%, var(--color-bg));
-      border-color: color-mix(in srgb, var(--color-border) 50%, var(--color-bg));
-    }
-
-    /* Read-only state */
-    &:read-only {
-      background: color-mix(in srgb, var(--color-text) 3%, var(--color-bg));
-      border-style: dashed;
-      cursor: default;
-    }
-
-    /* Invalid state (only show when user has interacted) */
-    &:invalid:not(:placeholder-shown):not(:focus) {
-      border-color: var(--color-danger);
-      background: color-mix(in srgb, var(--color-danger) 5%, var(--color-bg));
-    }
-
-    /* Valid state (only show when user has typed) */
-    &:valid:not(:placeholder-shown):not(:focus) {
-      border-color: var(--color-success);
+      box-shadow: none;
     }
   }
 
@@ -141,11 +110,6 @@
     resize: vertical;
     min-height: 8em;
     font-family: inherit;
-    line-height: var(--line-height-normal);
-
-    &:not([rows]) {
-      min-height: 10em;
-    }
   }
 
   /* ============================================
@@ -154,27 +118,11 @@
 
   :where(select) {
     cursor: pointer;
-    padding-inline-end: 2.5em;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234a5568' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 0.75em center;
-    background-size: 0.75em;
     appearance: none;
-
-    &:disabled {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23cbd5e0' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
-    }
-
-    /* Multiple select */
-    &[multiple] {
-      padding-inline-end: var(--space-sm);
-      background-image: none;
-      min-height: 8em;
-
-      & option {
-        padding: var(--space-2xs) var(--space-xs);
-      }
-    }
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2364748b' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1em center;
+    padding-right: 2.5em;
   }
 
   /* ============================================
@@ -183,188 +131,49 @@
 
   :where(input[type='checkbox']),
   :where(input[type='radio']) {
-    width: 1.125em;
-    height: 1.125em;
-    margin: 0;
-    margin-inline-end: var(--space-xs);
-    cursor: pointer;
-    border: 2px solid var(--color-border);
+    appearance: none;
+    width: 1.25em;
+    height: 1.25em;
+    border: 1px solid var(--color-border);
     background: var(--color-bg);
-    appearance: none;
-    transition: all var(--transition-fast);
-
-    &:focus-visible {
-      outline: 2px solid var(--color-primary);
-      outline-offset: 2px;
-    }
-
-    &:hover:not(:disabled) {
-      border-color: var(--color-primary);
-    }
-
-    &:checked {
-      background: var(--color-primary);
-      border-color: var(--color-primary);
-    }
-
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    &:indeterminate {
-      background: color-mix(in srgb, var(--color-primary) 50%, var(--color-bg));
-      border-color: var(--color-primary);
-    }
-  }
-
-  /* Checkbox specific */
-  :where(input[type='checkbox']) {
-    border-radius: var(--radius-sm);
-
-    &:checked {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='white' d='M10 3L4.5 8.5L2 6'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: 0.75em;
-    }
-
-    &:indeterminate {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='white' d='M3 6h6'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: 0.75em;
-    }
-  }
-
-  /* Radio specific */
-  :where(input[type='radio']) {
-    border-radius: var(--radius-full);
-
-    &:checked {
-      background-image: radial-gradient(circle, white 40%, transparent 40%);
-    }
-  }
-
-  /* ============================================
-   * Range Input (Slider)
-   * ============================================ */
-
-  :where(input[type='range']) {
-    width: 100%;
-    height: 0.375em;
-    padding: 0;
-    border: none;
-    background: color-mix(in srgb, var(--color-text) 20%, var(--color-bg));
-    border-radius: var(--radius-full);
-    appearance: none;
+    vertical-align: middle;
+    margin: 0;
+    margin-inline-end: 0.5em;
     cursor: pointer;
+    transition: all var(--transition-fast);
+    position: relative;
+    top: -1px;
 
-    /* Track */
-    &::-webkit-slider-runnable-track {
-      height: 0.375em;
-      background: color-mix(in srgb, var(--color-text) 20%, var(--color-bg));
-      border-radius: var(--radius-full);
-    }
-
-    &::-moz-range-track {
-      height: 0.375em;
-      background: color-mix(in srgb, var(--color-text) 20%, var(--color-bg));
-      border-radius: var(--radius-full);
-    }
-
-    /* Thumb */
-    &::-webkit-slider-thumb {
-      appearance: none;
-      width: 1.25em;
-      height: 1.25em;
-      background: var(--color-primary);
-      border: 2px solid white;
-      border-radius: var(--radius-full);
-      box-shadow: var(--shadow-sm);
-      cursor: pointer;
-      transition: all var(--transition-fast);
-    }
-
-    &::-moz-range-thumb {
-      width: 1.25em;
-      height: 1.25em;
-      background: var(--color-primary);
-      border: 2px solid white;
-      border-radius: var(--radius-full);
-      box-shadow: var(--shadow-sm);
-      cursor: pointer;
-      transition: all var(--transition-fast);
-    }
-
-    /* Hover/Focus states */
-    &:hover::-webkit-slider-thumb,
-    &:focus-visible::-webkit-slider-thumb {
-      background: var(--color-primary-hover);
-      transform: scale(1.1);
-    }
-
-    &:hover::-moz-range-thumb,
-    &:focus-visible::-moz-range-thumb {
-      background: var(--color-primary-hover);
-      transform: scale(1.1);
+    &:checked {
+      background-color: var(--color-primary);
+      border-color: var(--color-primary);
     }
 
     &:focus-visible {
       outline: none;
-    }
-
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-
-      &::-webkit-slider-thumb {
-        cursor: not-allowed;
-      }
-
-      &::-moz-range-thumb {
-        cursor: not-allowed;
-      }
+      box-shadow: 0 0 0 4px var(--color-primary-light);
     }
   }
 
-  /* ============================================
-   * File Input
-   * ============================================ */
+  :where(input[type='checkbox']) {
+    border-radius: var(--radius-sm);
 
-  :where(input[type='file']) {
-    width: 100%;
-    padding: var(--space-sm);
-    border: 2px dashed var(--color-border);
-    border-radius: var(--radius-md);
-    background: color-mix(in srgb, var(--color-text) 2%, var(--color-bg));
-    cursor: pointer;
-    transition: all var(--transition-fast);
-
-    &:hover:not(:disabled) {
-      border-color: var(--color-primary);
-      background: color-mix(in srgb, var(--color-primary) 5%, var(--color-bg));
+    &:checked {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-size: 85%;
+      background-position: center;
+      background-repeat: no-repeat;
     }
+  }
 
-    &:focus-visible {
-      outline: 2px solid var(--color-primary);
-      outline-offset: 2px;
-    }
+  :where(input[type='radio']) {
+    border-radius: 50%;
 
-    &::file-selector-button {
-      padding: var(--space-xs) var(--space-md);
-      margin-inline-end: var(--space-sm);
-      background: var(--color-primary);
-      color: white;
-      border: none;
-      border-radius: var(--radius-sm);
-      font-weight: var(--font-weight-medium);
-      cursor: pointer;
-      transition: background var(--transition-fast);
-    }
-
-    &::file-selector-button:hover {
-      background: var(--color-primary-hover);
+    &:checked {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Ccircle cx='12' cy='12' r='6'/%3E%3C/svg%3E");
+      background-size: 100%;
+      background-position: center;
+      background-repeat: no-repeat;
     }
   }
 
@@ -379,22 +188,25 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: var(--space-xs);
-    padding: var(--space-sm) var(--space-lg);
-    background: var(--color-primary);
-    color: white;
-    border: none;
-    border-radius: var(--radius-md);
-    font-weight: var(--font-weight-medium);
-    font-size: 1rem;
-    line-height: 1.5;
+    padding: 0.75em 1.5em;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.95rem;
+    line-height: 1.2;
     text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
     cursor: pointer;
-    transition: all var(--transition-fast);
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    background-color: var(--color-primary);
+    color: white;
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-sm);
     user-select: none;
 
     &:hover:not(:disabled) {
-      background: var(--color-primary-hover);
+      background-color: var(--color-primary-hover);
       transform: translateY(-1px);
       box-shadow: var(--shadow-md);
     }
@@ -405,30 +217,28 @@
     }
 
     &:focus-visible {
-      outline: 2px solid var(--color-primary);
-      outline-offset: 2px;
+      outline: none;
+      box-shadow: 0 0 0 4px var(--color-primary-light);
     }
 
     &:disabled {
-      opacity: 0.5;
+      opacity: 0.6;
       cursor: not-allowed;
       transform: none;
       box-shadow: none;
     }
   }
 
-  /* Reset button variant */
+  /* Secondary Button (Reset, etc) */
   :where(input[type='reset']),
   :where(button[type='reset']) {
-    background: color-mix(in srgb, var(--color-text) 15%, var(--color-bg));
+    background-color: var(--color-bg);
+    border-color: var(--color-border);
     color: var(--color-text);
 
     &:hover:not(:disabled) {
-      background: color-mix(in srgb, var(--color-text) 25%, var(--color-bg));
-    }
-
-    &:focus-visible {
-      outline-color: var(--color-text);
+      background-color: var(--color-bg-secondary);
+      border-color: color-mix(in srgb, var(--color-border) 80%, black);
     }
   }
 
@@ -438,167 +248,44 @@
 
   :where(fieldset) {
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    padding: var(--space-lg);
-    margin-block: var(--space-md);
-    min-width: 0;
+    border-radius: var(--radius-md);
+    padding: 1.5em;
+    margin-block: 1.5em;
+    background: var(--color-bg-secondary);
+  }
 
-    & legend {
-      padding-inline: var(--space-sm);
-      font-weight: var(--font-weight-semibold);
-      font-size: 1.1em;
-      color: var(--color-text);
-    }
-
-    &:disabled {
-      opacity: 0.6;
-
-      & legend {
-        color: var(--color-text-muted);
-      }
-    }
+  :where(legend) {
+    padding: 0 0.5em;
+    font-weight: 600;
+    color: var(--color-text);
   }
 
   /* ============================================
-   * Form Validation Messages (using :has())
+   * Validation Messages
    * ============================================ */
 
-  /* Style parent div when input is invalid */
   :where(div):has(> input:invalid:not(:placeholder-shown)),
-  :where(div):has(> textarea:invalid:not(:placeholder-shown)),
-  :where(div):has(> select:invalid) {
+  :where(div):has(> select:invalid),
+  :where(div):has(> textarea:invalid:not(:placeholder-shown)) {
     & small {
       display: block;
-      margin-block-start: var(--space-2xs);
+      margin-top: 0.5em;
       color: var(--color-danger);
-      font-size: 0.875em;
+      font-size: 0.85em;
+      font-weight: 500;
+      animation: fadeIn 200ms ease;
+    }
+    
+    & input, & select, & textarea {
+      border-color: var(--color-danger);
+      box-shadow: 0 0 0 4px var(--color-danger-bg);
     }
   }
 
-
-  /* ============================================
-   * Form Groups (spacing)
-   * ============================================ */
-
-  :where(form) {
-    & > div,
-    & > fieldset,
-    & > section {
-      margin-block-end: var(--space-md);
-
-      &:last-child {
-        margin-block-end: 0;
-      }
-    }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
-  /* ============================================
-   * Color & Date Inputs
-   * ============================================ */
-
-  :where(input[type='color']) {
-    width: 4rem;
-    height: 3rem;
-    padding: 0.25rem;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    cursor: pointer;
-
-    &::-webkit-color-swatch-wrapper {
-      padding: 0;
-    }
-
-    &::-webkit-color-swatch {
-      border: none;
-      border-radius: calc(var(--radius-md) - 0.25rem);
-    }
-
-    &::-moz-color-swatch {
-      border: none;
-      border-radius: calc(var(--radius-md) - 0.25rem);
-    }
-
-    &:focus-visible {
-      outline: 2px solid var(--color-primary);
-      outline-offset: 2px;
-    }
-  }
-
-  :where(input[type='date']),
-  :where(input[type='datetime-local']),
-  :where(input[type='time']),
-  :where(input[type='week']),
-  :where(input[type='month']) {
-    cursor: pointer;
-
-    &::-webkit-calendar-picker-indicator {
-      cursor: pointer;
-      opacity: 0.6;
-      transition: opacity var(--transition-fast);
-
-      &:hover {
-        opacity: 1;
-      }
-    }
-  }
-
-  /* ============================================
-   * Progress & Meter (bonus)
-   * ============================================ */
-
-  :where(progress),
-  :where(meter) {
-    width: 100%;
-    height: 1rem;
-    border: none;
-    border-radius: var(--radius-full);
-    overflow: hidden;
-    background: color-mix(in srgb, var(--color-text) 10%, var(--color-bg));
-    appearance: none;
-  }
-
-  :where(progress) {
-    &::-webkit-progress-bar {
-      background: color-mix(in srgb, var(--color-text) 10%, var(--color-bg));
-      border-radius: var(--radius-full);
-    }
-
-    &::-webkit-progress-value {
-      background: var(--color-primary);
-      border-radius: var(--radius-full);
-      transition: width var(--transition-base);
-    }
-
-    &::-moz-progress-bar {
-      background: var(--color-primary);
-      border-radius: var(--radius-full);
-      transition: width var(--transition-base);
-    }
-  }
-
-  :where(meter) {
-    &::-webkit-meter-bar {
-      background: color-mix(in srgb, var(--color-text) 10%, var(--color-bg));
-      border-radius: var(--radius-full);
-    }
-
-    &::-webkit-meter-optimum-value {
-      background: var(--color-success);
-      border-radius: var(--radius-full);
-    }
-
-    &::-webkit-meter-suboptimum-value {
-      background: var(--color-warning);
-      border-radius: var(--radius-full);
-    }
-
-    &::-webkit-meter-even-less-good-value {
-      background: var(--color-danger);
-      border-radius: var(--radius-full);
-    }
-
-    &::-moz-meter-bar {
-      border-radius: var(--radius-full);
-    }
-  }
 }
+
