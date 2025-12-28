@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Typography - Ragi CSS</title>
+  <link rel="stylesheet" href="../dist/ragi.css">
+  <style>
+    main {
+      max-width: 70rem;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    section {
+      margin-block: 3rem;
+      padding-block: 2rem;
+      border-block-start: 1px solid var(--color-border);
+    }
+
+    section:first-of-type {
+      border: none;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-block: 2rem;
+    }
+
+    .demo-box {
+      padding: 1.5rem;
+      background: var(--color-bg-secondary);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Ragi CSS Typography</h1>
+      <p class="lead">
+        Fluid typography using clamp() with a modular scale (1.25 ratio).
+        All text automatically responsive without media queries.
+      </p>
+    </header>
+
+    <!-- ============================================ -->
+    <!-- Headings -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Headings</h2>
+      <p>All headings use fluid sizing with clamp() for smooth scaling across viewports.</p>
+
+      <div class="demo-box">
+        <h1>Heading 1 - The quick brown fox</h1>
+        <h2>Heading 2 - The quick brown fox</h2>
+        <h3>Heading 3 - The quick brown fox</h3>
+        <h4>Heading 4 - The quick brown fox</h4>
+        <h5>Heading 5 - The quick brown fox</h5>
+        <h6>Heading 6 - The quick brown fox</h6>
+      </div>
+
+      <details style="margin-top: 1rem;">
+        <summary>View fluid sizing code</summary>
+        <pre><code>h1 { font-size: clamp(2rem, 1.5rem + 2vw, 3rem); }
+h2 { font-size: clamp(1.6rem, 1.3rem + 1.5vw, 2.4rem); }
+h3 { font-size: clamp(1.28rem, 1.15rem + 1vw, 1.92rem); }
+h4 { font-size: clamp(1.024rem, 1rem + 0.5vw, 1.536rem); }
+h5 { font-size: clamp(0.9rem, 0.85rem + 0.25vw, 1.23rem); }
+h6 { font-size: 1rem; text-transform: uppercase; }</code></pre>
+      </details>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- Paragraphs & Body Text -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Paragraphs & Body Text</h2>
+
+      <div class="demo-box">
+        <h3>Regular Paragraph</h3>
+        <p>
+          This is a regular paragraph with optimal line length (max 70 characters).
+          The quick brown fox jumps over the lazy dog. Lorem ipsum dolor sit amet,
+          consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore
+          et dolore magna aliqua.
+        </p>
+
+        <h3>Lead Paragraph (Automatically Styled)</h3>
+        <p>
+          First paragraph after a heading is automatically larger and muted.
+          This helps create visual hierarchy without any classes.
+        </p>
+        <p>
+          Subsequent paragraphs return to normal size. This is semantic HTML
+          working beautifully without manual intervention.
+        </p>
+
+        <h3>Lead Class (Manual)</h3>
+        <p class="lead">
+          You can also manually apply the .lead class for larger introductory text.
+          This is one of the few utility classes we provide.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- Links -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Links</h2>
+
+      <div class="demo-box">
+        <p>
+          This paragraph contains <a href="#">a standard link</a> that has
+          proper hover states and <a href="#">focus-visible support</a> for
+          keyboard navigation. Try tabbing to these links.
+        </p>
+
+        <h3><a href="#">Links in headings</a></h3>
+        <p>Heading links inherit color and show primary color on hover.</p>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- Lists -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Lists</h2>
+
+      <div class="grid">
+        <div class="demo-box">
+          <h3>Unordered List</h3>
+          <ul>
+            <li>First level item</li>
+            <li>First level item
+              <ul>
+                <li>Second level (circle)</li>
+                <li>Second level
+                  <ul>
+                    <li>Third level (square)</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>First level item</li>
+          </ul>
+        </div>
+
+        <div class="demo-box">
+          <h3>Ordered List</h3>
+          <ol>
+            <li>First level (decimal)</li>
+            <li>First level
+              <ol>
+                <li>Second level (alpha)</li>
+                <li>Second level
+                  <ol>
+                    <li>Third level (roman)</li>
+                  </ol>
+                </li>
+              </ol>
+            </li>
+            <li>First level</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="demo-box">
+        <h3>Description List</h3>
+        <dl>
+          <dt>Definition Term 1</dt>
+          <dd>This is the definition for term 1. It's indented and muted.</dd>
+
+          <dt>Definition Term 2</dt>
+          <dd>This is the definition for term 2.</dd>
+          <dd>Multiple definitions are supported.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- Inline Text Elements -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Inline Text Elements</h2>
+
+      <div class="demo-box">
+        <p>
+          <strong>Bold/strong text</strong> and <b>bold (b tag)</b><br>
+          <em>Italic/emphasis</em> and <i>italic (i tag)</i><br>
+          <small>Small text for fine print</small><br>
+          <mark>Highlighted/marked text</mark><br>
+          <del>Deleted/strikethrough text</del><br>
+          <ins>Inserted/underlined text</ins><br>
+          <abbr title="HyperText Markup Language">HTML</abbr> abbreviation with tooltip<br>
+          H<sub>2</sub>O subscript and E=mc<sup>2</sup> superscript
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- Code -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Code</h2>
+
+      <div class="demo-box">
+        <h3>Inline Code</h3>
+        <p>
+          Use <code>const x = 42;</code> for inline code snippets.
+          Variables like <var>x</var> and <var>y</var> are also styled.
+        </p>
+
+        <h3>Keyboard Input</h3>
+        <p>
+          Press <kbd>Cmd</kbd> + <kbd>C</kbd> to copy and
+          <kbd>Cmd</kbd> + <kbd>V</kbd> to paste.
+        </p>
+
+        <h3>Sample Output</h3>
+        <p>
+          Terminal output: <samp>$ npm install ragi-css</samp>
+        </p>
+
+        <h3>Code Block</h3>
+        <pre><code>function greet(name) {
+  console.log(`Hello, ${name}!`);
+  return `Welcome to Ragi CSS`;
+}
+
+// Call the function
+greet('World');</code></pre>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- Blockquotes -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Blockquotes</h2>
+
+      <div class="demo-box">
+        <blockquote>
+          <p>
+            The quick brown fox jumps over the lazy dog. This is a blockquote
+            with italic text and a left border in the primary color.
+          </p>
+          <cite>Author Name, Source</cite>
+        </blockquote>
+
+        <h3>Nested Blockquote</h3>
+        <blockquote>
+          <p>Outer quote with important information.</p>
+          <blockquote>
+            <p>Nested quote inside the outer quote.</p>
+          </blockquote>
+          <p>Back to the outer quote.</p>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- Horizontal Rule -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Horizontal Rule</h2>
+
+      <div class="demo-box">
+        <p>Content before the rule.</p>
+        <hr>
+        <p>Content after the rule.</p>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- Other Semantic Elements -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Other Semantic Elements</h2>
+
+      <div class="grid">
+        <div class="demo-box">
+          <h3>Address</h3>
+          <address>
+            123 Main Street<br>
+            San Francisco, CA 94102<br>
+            United States
+          </address>
+        </div>
+
+        <div class="demo-box">
+          <h3>Time</h3>
+          <p>
+            Published: <time datetime="2025-12-29">December 29, 2025</time><br>
+            Event time: <time datetime="2025-12-29T14:30">2:30 PM</time>
+          </p>
+        </div>
+      </div>
+
+      <div class="demo-box">
+        <h3>Figure with Caption</h3>
+        <figure>
+          <div style="height: 200px; background: linear-gradient(135deg, var(--color-primary), var(--color-secondary)); border-radius: var(--radius-lg);"></div>
+          <figcaption>A placeholder image with a caption below</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- Text Selection -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Text Selection</h2>
+
+      <div class="demo-box">
+        <p>
+          Try selecting this text! The selection color is automatically styled
+          using the primary color with color-mix() for proper contrast.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- Real-World Example -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Real-World Example: Blog Post</h2>
+
+      <article class="demo-box">
+        <header>
+          <h1>Getting Started with Ragi CSS</h1>
+          <p>
+            <time datetime="2025-12-29">December 29, 2025</time> ·
+            <a href="#">Web Development</a>
+          </p>
+        </header>
+
+        <p>
+          Ragi CSS is a modern classless CSS framework that leverages cutting-edge
+          CSS features from 2024-2025. Unlike traditional frameworks, you write
+          <strong>semantic HTML</strong> and everything looks great automatically.
+        </p>
+
+        <h2>Why Classless CSS?</h2>
+        <p>
+          Classless CSS frameworks offer several advantages:
+        </p>
+        <ul>
+          <li>Write semantic HTML without memorizing class names</li>
+          <li>Better accessibility by enforcing proper HTML structure</li>
+          <li>Smaller HTML file sizes (no class bloat)</li>
+          <li>Perfect for AI-generated content</li>
+        </ul>
+
+        <h2>Modern CSS Features</h2>
+        <p>
+          Ragi uses features that other classless frameworks don't:
+        </p>
+        <ol>
+          <li><strong>Cascade Layers</strong> - Override framework styles without <code>!important</code></li>
+          <li><strong>Container Queries</strong> - Responsive components, not just viewports</li>
+          <li><strong>@property</strong> - Type-safe CSS variables with validation</li>
+          <li><strong>color-mix()</strong> - Dynamic color generation from base colors</li>
+        </ol>
+
+        <h2>Installation</h2>
+        <p>Getting started is simple:</p>
+        <pre><code>&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ragi-css"&gt;</code></pre>
+
+        <blockquote>
+          <p>
+            The best CSS framework is the one that gets out of your way
+            and lets you focus on content.
+          </p>
+          <cite>Design Philosophy</cite>
+        </blockquote>
+
+        <h2>Customization</h2>
+        <p>
+          Override any design token by setting CSS variables before importing the framework:
+        </p>
+        <pre><code>:root {
+  --color-primary: rebeccapurple;
+  --space-unit: 1.5rem;
+  --font-sans: 'Inter', system-ui, sans-serif;
+}</code></pre>
+
+        <hr>
+
+        <footer>
+          <p><small>
+            Tagged: <a href="#">CSS</a>, <a href="#">Web Design</a>, <a href="#">Typography</a>
+          </small></p>
+        </footer>
+      </article>
+    </section>
+
+  </main>
+
+  <script>
+    console.log('📐 Typography Test Page Loaded');
+    console.log('Resize the browser to see fluid typography in action!');
+
+    // Show current font size
+    const h1 = document.querySelector('h1');
+    const h1Size = window.getComputedStyle(h1).fontSize;
+    console.log(`H1 size at current viewport: ${h1Size}`);
+
+    window.addEventListener('resize', () => {
+      const newSize = window.getComputedStyle(h1).fontSize;
+      console.log(`H1 size: ${newSize}`);
+    });
+  </script>
+</body>
+</html>

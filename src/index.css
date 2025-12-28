@@ -37,8 +37,8 @@
 @import './1-reset.css';
 @import './2-variables.css';
 
-/* Week 2: Typography (coming soon) */
-/* @import './3-typography.css'; */
+/* Week 2: Typography */
+@import './3-typography.css';
 
 /* Week 3-4: Forms and Layout (coming soon) */
 /* @import './4-forms.css'; */

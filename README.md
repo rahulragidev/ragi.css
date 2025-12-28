@@ -56,11 +56,14 @@ Unlike other classless frameworks (Pico, MVP, Water), Ragi uses cutting-edge CSS
 - [x] Spacing scale
 - [x] Basic test page
 
-### Week 2: Typography (In Progress)
-- [ ] Fluid typography with clamp()
-- [ ] Headings, paragraphs, lists
-- [ ] Code blocks
-- [ ] Links with proper focus states
+### Week 2: Typography ✅ COMPLETE
+- [x] Fluid typography with clamp()
+- [x] Modular scale headings (1.25 ratio)
+- [x] Headings, paragraphs, lists
+- [x] Code blocks (inline, kbd, samp, pre)
+- [x] Links with :focus-visible
+- [x] Blockquotes, hr, inline elements
+- [x] Typography examples page
 
 ### Coming Soon
 - Week 3-4: Forms with :has() and :focus-visible
@@ -92,9 +95,9 @@ npm watch
 ```
 ragi.css/
 ├── src/
-│   ├── 1-reset.css          ✅ Complete
-│   ├── 2-variables.css      ✅ Complete
-│   ├── 3-typography.css     ⏳ Week 2
+│   ├── 1-reset.css          ✅ Week 1
+│   ├── 2-variables.css      ✅ Week 1-2
+│   ├── 3-typography.css     ✅ Week 2
 │   ├── 4-forms.css          ⏳ Week 3-4
 │   ├── 5-layout.css         ⏳ Week 3-4
 │   ├── 6-components.css     ⏳ Week 5-6
@@ -105,7 +108,8 @@ ragi.css/
 │   ├── ragi.min.css
 │   └── ragi-core.css
 ├── examples/
-│   └── basic.html           ✅ Week 1 test
+│   ├── basic.html           ✅ Week 1
+│   └── typography.html      ✅ Week 2
 ├── docs/
 │   ├── RESEARCH.md          ✅ Complete research
 │   └── PLAN.md              ✅ Implementation plan
@@ -198,5 +202,5 @@ Coming soon - accepting contributions after Week 8 completion.
 
 ---
 
-**Status:** 🚧 In Development (Week 1 Complete)
-**Next:** Week 2 - Typography with fluid sizing
+**Status:** 🚧 In Development (Week 1-2 Complete)
+**Next:** Week 3 - Forms with :has() and :focus-visible
