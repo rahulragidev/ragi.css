@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layout - Ragi CSS</title>
+  <link rel="stylesheet" href="../dist/ragi.css">
+  <style>
+    main {
+      max-width: 90rem;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    section {
+      margin-block: 3rem;
+      padding-block: 2rem;
+      border-block-start: 1px solid var(--color-border);
+    }
+
+    section:first-of-type {
+      border: none;
+    }
+
+    .demo-box {
+      padding: 2rem;
+      background: var(--color-bg-secondary);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border);
+      margin-block: 1.5rem;
+    }
+
+    /* Demo card styling */
+    .demo-card {
+      padding: 1.5rem;
+      background: white;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      min-height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-muted);
+    }
+
+    .demo-card-img {
+      width: 100%;
+      height: 100px;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+      border-radius: var(--radius-sm);
+      margin-bottom: 1rem;
+    }
+
+    .highlight-container {
+      outline: 2px dashed var(--color-primary);
+      outline-offset: 4px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Ragi CSS Layout</h1>
+      <p class="lead">
+        Container queries, auto-responsive grids, and modern layout primitives.
+        Responsive components, not just responsive pages!
+      </p>
+    </header>
+
+    <!-- ============================================ -->
+    <!-- Auto-Responsive Grid -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Auto-Responsive Grid</h2>
+      <p>
+        No media queries needed! Grid automatically adjusts columns based on available space.
+        <strong>Resize your browser to see it adapt.</strong>
+      </p>
+
+      <div class="demo-box">
+        <div class="grid">
+          <div class="demo-card">Card 1</div>
+          <div class="demo-card">Card 2</div>
+          <div class="demo-card">Card 3</div>
+          <div class="demo-card">Card 4</div>
+          <div class="demo-card">Card 5</div>
+          <div class="demo-card">Card 6</div>
+        </div>
+      </div>
+
+      <details>
+        <summary>View auto-grid code</summary>
+        <pre><code>&lt;div class="grid"&gt;
+  &lt;div&gt;Card 1&lt;/div&gt;
+  &lt;div&gt;Card 2&lt;/div&gt;
+  &lt;div&gt;Card 3&lt;/div&gt;
+&lt;/div&gt;
+
+/* CSS - automatically responsive! */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+  gap: clamp(1rem, 3vw, 2rem);
+}</code></pre>
+      </details>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- Container Queries -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Container Queries</h2>
+      <p>
+        Components respond to their <strong>container's</strong> width, not the viewport.
+        This card layout adapts based on its parent container!
+      </p>
+
+      <div class="demo-box">
+        <h3>Wide Container (card goes horizontal)</h3>
+        <div style="width: 100%; container-type: inline-size;">
+          <article class="card" style="max-width: none;">
+            <div class="demo-card-img"></div>
+            <h4>Responsive Card</h4>
+            <p>This card adapts to its container. When the container is >400px wide, the card becomes horizontal.</p>
+          </article>
+        </div>
+
+        <h3 style="margin-top: 2rem;">Narrow Container (card stays vertical)</h3>
+        <div style="width: 350px; container-type: inline-size;">
+          <article class="card" style="max-width: none;">
+            <div class="demo-card-img"></div>
+            <h4>Same Card, Narrow Container</h4>
+            <p>Same CSS, but vertical layout because container is narrow.</p>
+          </article>
+        </div>
+      </div>
+
+      <details>
+        <summary>View container query code</summary>
+        <pre><code>/* Container becomes a container */
+.container {
+  container-type: inline-size;
+}
+
+/* Card adapts based on container width */
+@container (min-width: 400px) {
+  .card:has(img) {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: var(--space-md);
+  }
+}</code></pre>
+      </details>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- Subgrid -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Subgrid (Perfect Alignment)</h2>
+      <p>
+        Cards in a grid inherit parent grid rows for perfect alignment.
+        All cards align at the same baseline regardless of content length!
+      </p>
+
+      <div class="demo-box">
+        <div class="grid" style="grid-auto-rows: auto 1fr auto;">
+          <article class="demo-card" style="display: grid; grid-template-rows: subgrid; grid-row: span 3; align-items: start; padding: 1rem;">
+            <header style="font-weight: bold; margin-bottom: 0.5rem;">Short Title</header>
+            <div>Some content here.</div>
+            <footer style="margin-top: 0.5rem; font-size: 0.875em; color: var(--color-text-muted);">Footer</footer>
+          </article>
+
+          <article class="demo-card" style="display: grid; grid-template-rows: subgrid; grid-row: span 3; align-items: start; padding: 1rem;">
+            <header style="font-weight: bold; margin-bottom: 0.5rem;">Much Longer Title That Wraps</header>
+            <div>More content that takes up several lines and makes this card taller than the others.</div>
+            <footer style="margin-top: 0.5rem; font-size: 0.875em; color: var(--color-text-muted);">Footer</footer>
+          </article>
+
+          <article class="demo-card" style="display: grid; grid-template-rows: subgrid; grid-row: span 3; align-items: start; padding: 1rem;">
+            <header style="font-weight: bold; margin-bottom: 0.5rem;">Medium Title</header>
+            <div>Content here.</div>
+            <footer style="margin-top: 0.5rem; font-size: 0.875em; color: var(--color-text-muted);">Footer</footer>
+          </article>
+        </div>
+      </div>
+
+      <p style="font-size: 0.9em; color: var(--color-text-muted);">
+        <strong>Note:</strong> Subgrid works in Chrome 117+, Firefox 71+, Safari 16+.
+        Framework uses progressive enhancement - graceful fallback in older browsers.
+      </p>
+
+      <details>
+        <summary>View subgrid code</summary>
+        <pre><code>/* Progressive enhancement */
+@supports (grid-template-rows: subgrid) {
+  .grid > * {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 3; /* header, content, footer */
+  }
+}</code></pre>
+      </details>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- Stack Layout -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Stack Layout</h2>
+      <p>Vertical spacing without margins on individual elements.</p>
+
+      <div class="demo-box">
+        <div class="stack">
+          <div class="demo-card">Stack Item 1</div>
+          <div class="demo-card">Stack Item 2</div>
+          <div class="demo-card">Stack Item 3</div>
+          <div class="demo-card">Stack Item 4</div>
+        </div>
+      </div>
+
+      <details>
+        <summary>View stack code</summary>
+        <pre><code>&lt;div class="stack"&gt;
+  &lt;div&gt;Item 1&lt;/div&gt;
+  &lt;div&gt;Item 2&lt;/div&gt;
+&lt;/div&gt;
+
+/* Variants */
+.stack     /* Default spacing */
+.stack-sm  /* Small spacing */
+.stack-lg  /* Large spacing */</code></pre>
+      </details>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- Cluster Layout -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Cluster Layout</h2>
+      <p>Inline grouping with wrapping (great for tags, buttons, etc).</p>
+
+      <div class="demo-box">
+        <div class="cluster">
+          <button>Action 1</button>
+          <button>Action 2</button>
+          <button>Action 3</button>
+          <button>Action 4</button>
+          <button>Action 5</button>
+          <button>Action 6</button>
+        </div>
+      </div>
+
+      <div class="demo-box">
+        <div class="cluster-between">
+          <div>
+            <strong>Total:</strong> $99.00
+          </div>
+          <div class="cluster">
+            <button type="button">Cancel</button>
+            <button type="submit">Checkout</button>
+          </div>
+        </div>
+      </div>
+
+      <details>
+        <summary>View cluster code</summary>
+        <pre><code>.cluster          /* Default */
+.cluster-start    /* Align left */
+.cluster-center   /* Align center */
+.cluster-end      /* Align right */
+.cluster-between  /* Space between */</code></pre>
+      </details>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- Switcher Layout -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Switcher Layout</h2>
+      <p>Automatically switches between row and column based on available space.</p>
+
+      <div class="demo-box">
+        <div class="switcher">
+          <div class="demo-card">Item 1</div>
+          <div class="demo-card">Item 2</div>
+          <div class="demo-card">Item 3</div>
+        </div>
+      </div>
+
+      <details>
+        <summary>View switcher code</summary>
+        <pre><code>&lt;div class="switcher"&gt;
+  &lt;div&gt;Item 1&lt;/div&gt;
+  &lt;div&gt;Item 2&lt;/div&gt;
+  &lt;div&gt;Item 3&lt;/div&gt;
+&lt;/div&gt;
+
+/* Switches to vertical when items don't fit */</code></pre>
+      </details>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- Card Component -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Card Component</h2>
+      <p>Container-query-aware cards with header and footer.</p>
+
+      <div class="demo-box">
+        <div class="grid-2">
+          <article class="card">
+            <header>
+              <h3 style="margin: 0;">Card Title</h3>
+            </header>
+            <p>This is a card with a header and footer. The card uses container queries to adapt its layout.</p>
+            <footer>
+              <div class="cluster-between" style="width: 100%;">
+                <small>Last updated: Today</small>
+                <button>Read More</button>
+              </div>
+            </footer>
+          </article>
+
+          <article class="card">
+            <header>
+              <h3 style="margin: 0;">Another Card</h3>
+            </header>
+            <p>Cards have hover effects and adapt to their container size.</p>
+            <ul>
+              <li>Feature 1</li>
+              <li>Feature 2</li>
+              <li>Feature 3</li>
+            </ul>
+            <footer>
+              <button>Action</button>
+            </footer>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- Aspect Ratio -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Aspect Ratio Containers</h2>
+      <p>Maintain specific aspect ratios for images and videos.</p>
+
+      <div class="demo-box">
+        <div class="grid-3">
+          <div class="ratio-16-9" style="background: linear-gradient(135deg, var(--color-primary), var(--color-secondary)); border-radius: var(--radius-md);">
+          </div>
+          <div class="ratio-4-3" style="background: linear-gradient(135deg, var(--color-success), var(--color-warning)); border-radius: var(--radius-md);">
+          </div>
+          <div class="ratio-1-1" style="background: linear-gradient(135deg, var(--color-danger), var(--color-primary)); border-radius: var(--radius-md);">
+          </div>
+        </div>
+        <div style="margin-top: 1rem; display: flex; justify-content: space-around; font-size: 0.875em; color: var(--color-text-muted);">
+          <span>16:9 (Video)</span>
+          <span>4:3 (Photo)</span>
+          <span>1:1 (Square)</span>
+        </div>
+      </div>
+
+      <details>
+        <summary>View aspect ratio code</summary>
+        <pre><code>.ratio-16-9  /* 16:9 - Video */
+.ratio-4-3   /* 4:3 - Photo */
+.ratio-1-1   /* 1:1 - Square */
+.ratio-21-9  /* 21:9 - Ultrawide */
+
+/* Images inside fill the space */
+&lt;div class="ratio-16-9"&gt;
+  &lt;img src="..." alt="..."&gt;
+&lt;/div&gt;</code></pre>
+      </details>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- Container Widths -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Container Widths</h2>
+      <p>Pre-defined container sizes for different content types.</p>
+
+      <div class="demo-box">
+        <div class="container-narrow" style="background: var(--color-primary-bg); padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1rem;">
+          <strong>.container-narrow</strong> - 50rem max-width (ideal for blog posts)
+        </div>
+
+        <div class="container" style="background: var(--color-primary-bg); padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1rem;">
+          <strong>.container</strong> - 70rem max-width (default main content)
+        </div>
+
+        <div class="container-wide" style="background: var(--color-primary-bg); padding: 1rem; border-radius: var(--radius-md);">
+          <strong>.container-wide</strong> - 90rem max-width (dashboards, wide layouts)
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- Region Spacing -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Region Spacing</h2>
+      <p>Consistent vertical padding for page sections.</p>
+
+      <div class="demo-box">
+        <div class="region-sm" style="background: var(--color-bg); border: 1px solid var(--color-border); border-radius: var(--radius-md); margin-bottom: 1rem;">
+          <strong>.region-sm</strong> - Small padding
+        </div>
+
+        <div class="region" style="background: var(--color-bg); border: 1px solid var(--color-border); border-radius: var(--radius-md); margin-bottom: 1rem;">
+          <strong>.region</strong> - Default padding
+        </div>
+
+        <div class="region-lg" style="background: var(--color-bg); border: 1px solid var(--color-border); border-radius: var(--radius-md);">
+          <strong>.region-lg</strong> - Large padding
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- Responsive Columns -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Responsive Columns (CSS Columns + Container Queries)</h2>
+      <p>Text flows into columns based on container width.</p>
+
+      <div class="demo-box">
+        <div class="columns">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris.
+          </p>
+          <p>
+            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+            eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
+          </p>
+          <p>
+            Sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut
+            perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- Real-World Example: Blog Layout -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Real-World Example: Blog Post Layout</h2>
+
+      <div class="demo-box">
+        <article class="container-narrow">
+          <header class="stack">
+            <h1>Understanding Container Queries in CSS</h1>
+            <div class="cluster">
+              <small>By John Doe</small>
+              <small>•</small>
+              <time>December 29, 2025</time>
+              <small>•</small>
+              <small>5 min read</small>
+            </div>
+          </header>
+
+          <div class="ratio-16-9" style="margin-block: 2rem;">
+            <div style="width: 100%; height: 100%; background: linear-gradient(135deg, var(--color-primary), var(--color-secondary)); border-radius: var(--radius-lg);"></div>
+          </div>
+
+          <div class="flow">
+            <p class="lead">
+              Container queries are a game-changer for responsive design, allowing components
+              to adapt based on their container size rather than the viewport.
+            </p>
+
+            <h2>What are Container Queries?</h2>
+            <p>
+              Unlike traditional media queries that respond to viewport width, container queries
+              let elements respond to their parent container's size. This enables truly reusable,
+              responsive components.
+            </p>
+
+            <h3>Benefits</h3>
+            <ul>
+              <li>Components are self-contained and reusable</li>
+              <li>No need for global media queries</li>
+              <li>Better component composition</li>
+            </ul>
+
+            <blockquote>
+              <p>
+                Container queries represent the future of responsive web design,
+                moving from page-based to component-based responsiveness.
+              </p>
+              <cite>Rachel Andrew, CSS Working Group</cite>
+            </blockquote>
+
+            <h2>Browser Support</h2>
+            <p>
+              As of 2025, container queries are supported in all modern browsers with
+              over 82% global coverage.
+            </p>
+          </div>
+
+          <footer class="region" style="border-top: 1px solid var(--color-border); margin-top: 3rem;">
+            <div class="cluster-between">
+              <div class="cluster">
+                <small>Tags:</small>
+                <small style="padding: 0.25rem 0.5rem; background: var(--color-primary-bg); border-radius: var(--radius-sm);">CSS</small>
+                <small style="padding: 0.25rem 0.5rem; background: var(--color-primary-bg); border-radius: var(--radius-sm);">Container Queries</small>
+              </div>
+              <button>Share</button>
+            </div>
+          </footer>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- Real-World Example: Dashboard Grid -->
+    <!-- ============================================ -->
+    <section>
+      <h2>Real-World Example: Dashboard</h2>
+
+      <div class="demo-box">
+        <div class="container-wide">
+          <div class="stack-lg">
+            <header class="cluster-between">
+              <h2 style="margin: 0;">Dashboard</h2>
+              <div class="cluster">
+                <button>Export</button>
+                <button>Settings</button>
+              </div>
+            </header>
+
+            <div class="grid-3">
+              <article class="card">
+                <h3 style="margin-top: 0; color: var(--color-primary);">1,234</h3>
+                <p style="margin: 0; color: var(--color-text-muted);">Total Users</p>
+              </article>
+              <article class="card">
+                <h3 style="margin-top: 0; color: var(--color-success);">$12,345</h3>
+                <p style="margin: 0; color: var(--color-text-muted);">Revenue</p>
+              </article>
+              <article class="card">
+                <h3 style="margin-top: 0; color: var(--color-warning);">56</h3>
+                <p style="margin: 0; color: var(--color-text-muted);">Pending Orders</p>
+              </article>
+            </div>
+
+            <div class="grid-2">
+              <article class="card">
+                <header><h3 style="margin: 0;">Recent Activity</h3></header>
+                <ul>
+                  <li>User signed up - 2 min ago</li>
+                  <li>Order #1234 completed - 5 min ago</li>
+                  <li>New message received - 10 min ago</li>
+                </ul>
+              </article>
+
+              <article class="card">
+                <header><h3 style="margin: 0;">Quick Actions</h3></header>
+                <div class="stack">
+                  <button style="width: 100%;">Create New User</button>
+                  <button style="width: 100%;">View Reports</button>
+                  <button style="width: 100%;">Export Data</button>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    console.log('📐 Layout Test Page Loaded');
+    console.log('Resize your browser to see responsive layouts adapt!');
+
+    // Monitor container query changes
+    if ('ResizeObserver' in window) {
+      const containers = document.querySelectorAll('[class*="container"], .card, .grid');
+      containers.forEach((container, index) => {
+        const observer = new ResizeObserver(entries => {
+          entries.forEach(entry => {
+            console.log(`Container ${index + 1} width: ${Math.round(entry.contentRect.width)}px`);
+          });
+        });
+        observer.observe(container);
+      });
+    }
+  </script>
+</body>
+</html>

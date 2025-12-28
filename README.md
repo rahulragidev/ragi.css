@@ -78,8 +78,20 @@ Unlike other classless frameworks (Pico, MVP, Water), Ragi uses cutting-edge CSS
 - [x] Progress & meter elements
 - [x] Forms examples page
 
+### Week 4: Layout ✅ COMPLETE
+- [x] Container queries for responsive components
+- [x] Auto-responsive grid (no media queries!)
+- [x] Subgrid for perfect card alignment
+- [x] Layout primitives (stack, cluster, switcher)
+- [x] Sidebar layouts with container queries
+- [x] Card components
+- [x] Aspect ratio containers
+- [x] Responsive columns with CSS columns
+- [x] Container width utilities
+- [x] Region spacing
+- [x] Layout examples page
+
 ### Coming Soon
-- Week 4: Layout with container queries
 - Week 5-6: Components and themes
 - Week 7: Accessibility layer
 - Week 8: Dark mode with color-mix()
@@ -108,11 +120,11 @@ npm watch
 ```
 ragi.css/
 ├── src/
-│   ├── 1-reset.css          ✅ Week 1
-│   ├── 2-variables.css      ✅ Week 1-2
-│   ├── 3-typography.css     ✅ Week 2
-│   ├── 4-forms.css          ✅ Week 3
-│   ├── 5-layout.css         ⏳ Week 3-4
+│   ├── 1-reset.css          ✅ Week 1 (144 lines)
+│   ├── 2-variables.css      ✅ Week 1-2 (151 lines)
+│   ├── 3-typography.css     ✅ Week 2 (427 lines)
+│   ├── 4-forms.css          ✅ Week 3 (615 lines)
+│   ├── 5-layout.css         ✅ Week 4 (584 lines)
 │   ├── 6-components.css     ⏳ Week 5-6
 │   ├── 7-accessibility.css  ⏳ Week 7
 │   └── 8-themes.css         ⏳ Week 8
@@ -123,7 +135,8 @@ ragi.css/
 ├── examples/
 │   ├── basic.html           ✅ Week 1
 │   ├── typography.html      ✅ Week 2
-│   └── forms.html           ✅ Week 3
+│   ├── forms.html           ✅ Week 3
+│   └── layout.html          ✅ Week 4
 ├── docs/
 │   ├── RESEARCH.md          ✅ Complete research
 │   └── PLAN.md              ✅ Implementation plan
@@ -216,5 +229,5 @@ Coming soon - accepting contributions after Week 8 completion.
 
 ---
 
-**Status:** 🚧 In Development (Week 1-3 Complete)
-**Next:** Week 4 - Layout with container queries
+**Status:** 🚧 In Development (Week 1-4 Complete - Core Framework Done!)
+**Next:** Week 5-6 - Components and themes (optional enhancements)
