@@ -1,0 +1,144 @@
+/**
+ * Ragi CSS - Reset Layer
+ * Normalizes browser defaults and provides a consistent baseline
+ */
+
+@layer reset {
+  /* Box sizing normalization */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  /* Remove default margins */
+  * {
+    margin: 0;
+  }
+
+  /* Body defaults for better typography */
+  body {
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Media elements */
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Form elements inherit font */
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+    color: inherit;
+  }
+
+  /* Prevent text overflow */
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    overflow-wrap: break-word;
+  }
+
+  /* Remove list styles on ul, ol with list role */
+  ul[role='list'],
+  ol[role='list'] {
+    list-style: none;
+    padding: 0;
+  }
+
+  /* Remove default button styles (will be re-styled in components) */
+  button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  /* Link defaults */
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* Table normalization */
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+  /* Remove default fieldset/legend styles */
+  fieldset {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    min-width: 0;
+  }
+
+  legend {
+    padding: 0;
+  }
+
+  /* Textarea should resize vertically only by default */
+  textarea {
+    resize: vertical;
+  }
+
+  /* Make sure textareas without a rows attribute are not tiny */
+  textarea:not([rows]) {
+    min-height: 10em;
+  }
+
+  /* Inherit fonts for inputs and buttons */
+  input,
+  button,
+  textarea,
+  select {
+    margin: 0;
+  }
+
+  /* Remove spinner buttons on number inputs (will add back if needed) */
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    height: auto;
+  }
+
+  /* Improve consistency of search inputs */
+  input[type='search'] {
+    -webkit-appearance: textfield;
+    outline-offset: -2px;
+  }
+
+  input[type='search']::-webkit-search-decoration {
+    -webkit-appearance: none;
+  }
+
+  /* Make sure disabled elements don't get the pointer cursor */
+  :disabled {
+    cursor: not-allowed;
+  }
+
+  /* Add the correct display in Edge and Safari */
+  summary {
+    display: list-item;
+  }
+
+  /* Hidden attribute */
+  [hidden] {
+    display: none !important;
+  }
+}

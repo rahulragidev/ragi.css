@@ -1,0 +1,47 @@
+{
+  "name": "ragi-css",
+  "version": "0.1.0",
+  "description": "Modern classless CSS framework using 2024-2025 CSS features",
+  "main": "dist/ragi.css",
+  "style": "dist/ragi.css",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "postcss src/index.css -o dist/ragi.css",
+    "build:min": "NODE_ENV=production postcss src/index.css -o dist/ragi.min.css",
+    "build:core": "postcss src/core.css -o dist/ragi-core.css",
+    "build:all": "npm run build && npm run build:min && npm run build:core",
+    "watch": "postcss src/index.css -o dist/ragi.css --watch",
+    "test:size": "node tests/size-check.js",
+    "lint": "stylelint 'src/**/*.css'"
+  },
+  "keywords": [
+    "css",
+    "framework",
+    "classless",
+    "semantic",
+    "accessible",
+    "modern-css",
+    "container-queries",
+    "cascade-layers"
+  ],
+  "author": "Rahul Ragi",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rahulragi/ragi-css.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rahulragi/ragi-css/issues"
+  },
+  "homepage": "https://github.com/rahulragi/ragi-css#readme",
+  "devDependencies": {
+    "postcss": "^8.4.32",
+    "postcss-cli": "^11.0.0",
+    "postcss-import": "^16.0.0",
+    "cssnano": "^6.0.3",
+    "stylelint": "^16.1.0",
+    "stylelint-config-standard": "^36.0.0"
+  }
+}

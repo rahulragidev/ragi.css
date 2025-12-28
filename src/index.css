@@ -1,0 +1,54 @@
+/**
+ * Ragi CSS v0.1.0
+ * Modern classless CSS framework using 2024-2025 CSS features
+ *
+ * Features:
+ * - Cascade Layers for guaranteed user override safety
+ * - Container Queries for responsive components
+ * - @property for type-safe design tokens
+ * - :has() for smart conditional styling
+ * - Native CSS nesting
+ * - :focus-visible for keyboard-only focus
+ * - color-mix() for dynamic color variations
+ *
+ * Browser Support:
+ * - Chrome 113+
+ * - Firefox 117+
+ * - Safari 16.6+
+ * - Edge 113+
+ *
+ * License: MIT
+ * Repository: https://github.com/rahulragi/ragi-css
+ */
+
+/* ============================================
+ * Cascade Layers Declaration
+ * Order matters: reset → variables → base → layout → components → accessibility → themes
+ * User styles (no layer) will always override these
+ * ============================================ */
+
+@layer reset, variables, base, layout, components, accessibility, themes;
+
+/* ============================================
+ * Import Layer Files
+ * Week 1: Reset and Variables only
+ * ============================================ */
+
+@import './1-reset.css';
+@import './2-variables.css';
+
+/* Week 2: Typography (coming soon) */
+/* @import './3-typography.css'; */
+
+/* Week 3-4: Forms and Layout (coming soon) */
+/* @import './4-forms.css'; */
+/* @import './5-layout.css'; */
+
+/* Week 5-6: Components and Themes (coming soon) */
+/* @import './6-components.css'; */
+
+/* Week 7: Accessibility (coming soon) */
+/* @import './7-accessibility.css'; */
+
+/* Week 8: Themes (coming soon) */
+/* @import './8-themes.css'; */

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ragi CSS - Basic Test (Week 1)</title>
+  <link rel="stylesheet" href="../dist/ragi.css">
+  <style>
+    /* Quick visual test of CSS variables */
+    body {
+      font-family: var(--font-sans);
+      color: var(--color-text);
+      background: var(--color-bg);
+      padding: var(--space-lg);
+    }
+
+    .test-card {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: var(--space-lg);
+      background: var(--color-bg-secondary);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-lg);
+    }
+
+    .color-test {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+    }
+
+    .color-swatch {
+      padding: var(--space-md);
+      border-radius: var(--radius-md);
+      text-align: center;
+      font-size: 0.875rem;
+      font-weight: var(--font-weight-medium);
+    }
+
+    .primary { background: var(--color-primary); color: white; }
+    .secondary { background: var(--color-secondary); color: white; }
+    .success { background: var(--color-success); color: white; }
+    .danger { background: var(--color-danger); color: white; }
+    .warning { background: var(--color-warning); color: white; }
+
+    .spacing-test {
+      margin-top: var(--space-xl);
+    }
+
+    .spacing-test > div {
+      background: var(--color-primary-bg);
+      border-left: 4px solid var(--color-primary);
+      margin-bottom: var(--space-sm);
+      font-size: 0.875rem;
+      font-family: var(--font-mono);
+    }
+  </style>
+</head>
+<body>
+  <div class="test-card">
+    <h1>Ragi CSS - Week 1 Test</h1>
+    <p>Testing reset and variables layers</p>
+
+    <h2>@property Typed Colors</h2>
+    <p>These colors are type-validated by the browser using @property:</p>
+    <div class="color-test">
+      <div class="color-swatch primary">Primary</div>
+      <div class="color-swatch secondary">Secondary</div>
+      <div class="color-swatch success">Success</div>
+      <div class="color-swatch danger">Danger</div>
+      <div class="color-swatch warning">Warning</div>
+    </div>
+
+    <h2>color-mix() Generated Variations</h2>
+    <p>Hover states and backgrounds generated with color-mix():</p>
+    <div class="color-test">
+      <div class="color-swatch" style="background: var(--color-primary-hover); color: white;">
+        Primary Hover
+      </div>
+      <div class="color-swatch" style="background: var(--color-primary-light); color: white;">
+        Primary Light
+      </div>
+      <div class="color-swatch" style="background: var(--color-primary-bg);">
+        Primary BG
+      </div>
+    </div>
+
+    <h2>Spacing Scale</h2>
+    <p>Based on --space-unit (1rem = 16px by default):</p>
+    <div class="spacing-test">
+      <div style="padding: var(--space-3xs);">--space-3xs (4px)</div>
+      <div style="padding: var(--space-2xs);">--space-2xs (8px)</div>
+      <div style="padding: var(--space-xs);">--space-xs (12px)</div>
+      <div style="padding: var(--space-sm);">--space-sm (16px)</div>
+      <div style="padding: var(--space-md);">--space-md (24px)</div>
+      <div style="padding: var(--space-lg);">--space-lg (32px)</div>
+      <div style="padding: var(--space-xl);">--space-xl (48px)</div>
+    </div>
+
+    <h2>Reset Layer</h2>
+    <p>Box-sizing: border-box applied to all elements</p>
+    <p>Default margins removed from all elements</p>
+    <p>Form elements inherit font styles</p>
+
+    <h2>Next Steps</h2>
+    <ul>
+      <li>Week 2: Typography with fluid sizing (clamp())</li>
+      <li>Week 3-4: Forms with :has() and :focus-visible</li>
+      <li>Week 5-6: Components and themes</li>
+      <li>Week 7: Accessibility layer</li>
+    </ul>
+  </div>
+
+  <script>
+    // Test that @property validation works
+    console.log('Testing @property type validation...');
+
+    // This should work (valid color)
+    document.documentElement.style.setProperty('--color-primary', '#ff0000');
+    console.log('✓ Set --color-primary to #ff0000 (valid color)');
+
+    // This should fail gracefully (invalid color for color syntax)
+    try {
+      document.documentElement.style.setProperty('--color-primary', '20px');
+      console.log('✗ Set --color-primary to 20px (should be ignored - wrong type)');
+    } catch (e) {
+      console.log('✓ Browser rejected invalid type');
+    }
+
+    // Check computed value
+    const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--color-primary');
+    console.log('Current --color-primary:', primaryColor);
+
+    // Test color-mix()
+    const primaryBg = getComputedStyle(document.documentElement).getPropertyValue('--color-primary-bg');
+    console.log('Generated --color-primary-bg with color-mix():', primaryBg);
+  </script>
+</body>
+</html>
